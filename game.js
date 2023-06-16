@@ -1,28 +1,38 @@
 const canvas = document.querySelector('#game');
 const game = canvas.getContext('2d');
-window.addEventListener('load',starGame);
 
-function starGame(){
-    let canvasSize;
+window.addEventListener('load',setCanvasSize);
+window.addEventListener('resize',setCanvasSize);
 
-    if(window.innerHeight>window.innerWidth){
-        canvasSize = window.innerWidth * 0.8;
-    }else{
-        canvasSize = window.innerHeight * 0.8;
-    }
- 
-canvas.setAttribute('width',canvasSize);
-canvas.setAttribute('height',canvasSize);
+let canvasSize;
+let elementsSize;
 
-const elementsSize = (canvasSize/10)-1  ;
+function starGame(){  
 
 console.log({canvasSize, elementsSize});
 
 game.font = elementsSize+'px Verdana';
-game.textAlign = "";
+game.textAlign = "start";
 
-for (let i = 0; i < 10; i++) {
-    game.fillText(emojis['X'],elementsSize*i,elementsSize);    
+const map = maps[2];
+const mapRows = map.trim().split('\n');
+const mapRowCols = mapRows.map(row => row.trim().split(""));
+console.log(mapRowCols);
+/*
+Tenemos otro codigo que hace lo mismo que el codigo de convertir string de mapas en arreglo bidimensional:
+
+const map = maps[0]
+.match(/[IXO\-]+]/g)
+.map(a=>a.split(""))
+
+el match ayuda a buscar string que empiecen por I,X,O,\n y devolverá cada string a partir de ello, además 
+hara un salto al termino de este. y luego se usa el map() que ya conocemos como funciona.
+*/
+for (let row = 1; row <= 10; row++) {
+    for (let col = 0; col < 10; col++) {
+        game.fillText(emojis[mapRowCols[row-1][col]],elementsSize*col,elementsSize*row);    
+        
+    }
 }
 
 //window.innerHeight
@@ -37,7 +47,20 @@ for (let i = 0; i < 10; i++) {
     game.textAlign = 'center';
     game.fillText('platzi',50,50)*/
 }
-let canvasSize;
 
-canvas.setAttribute('width',canvasSize);
-canvas.setAttribute('height',canvasSize);
+function setCanvasSize(){
+    
+    if(window.innerHeight>window.innerWidth){
+        canvasSize = window.innerWidth * 0.8;
+    }else{
+        canvasSize = window.innerHeight * 0.8;
+    }
+ 
+    canvas.setAttribute('width',canvasSize);
+    canvas.setAttribute('height',canvasSize);
+
+    elementsSize =  (canvasSize/10)-1;
+
+    starGame();
+}
+
