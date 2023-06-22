@@ -9,7 +9,7 @@ let elementsSize;
 
 function starGame(){  
 
-console.log({canvasSize, elementsSize});
+//console.log({canvasSize, elementsSize});
 
 game.font = elementsSize+'px Verdana';
 game.textAlign = "start";
@@ -17,7 +17,7 @@ game.textAlign = "start";
 const map = maps[2];
 const mapRows = map.trim().split('\n');
 const mapRowCols = mapRows.map(row => row.trim().split(""));
-console.log(mapRowCols);
+//console.log(mapRowCols);
 /*
 Tenemos otro codigo que hace lo mismo que el codigo de convertir string de mapas en arreglo bidimensional:
 
@@ -64,3 +64,46 @@ function setCanvasSize(){
     starGame();
 }
 
+window.addEventListener("keydown", moveByKeys);
+const btnUp = document.getElementById("up");
+const btnLeft = document.getElementById("left");
+const btnRight = document.getElementById("right");
+const btnDown = document.getElementById("down");
+
+btnUp.addEventListener("click", moveUp);
+btnLeft.addEventListener("click", moveLeft);
+btnRight.addEventListener("click", moveRight);
+btnDown.addEventListener("click", moveDown);
+
+    function moveUp() {
+    console.log("Me movere hacia arriba");
+  }
+  
+  function moveLeft() {
+    console.log("Me movere hacia izq");
+  }
+  
+  function moveRight() {
+    console.log("Me movere hacia dere");
+  }
+  
+  function moveDown() {
+    console.log("Me movere hacia aba");
+  }
+
+function moveByKeys(e){
+    switch(e.key){
+        case "ArrowUp":
+            moveUp();
+            break;
+        case "ArrowDown":
+            moveDown();
+            break;
+        case "ArrowLeft":
+            moveLeft();
+            break;
+        case "ArrowRight":
+            moveRight();
+            break;
+    }
+}
