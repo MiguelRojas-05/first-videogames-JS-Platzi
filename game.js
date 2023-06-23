@@ -6,6 +6,10 @@ window.addEventListener('resize',setCanvasSize);
 
 let canvasSize;
 let elementsSize;
+const playerPosition ={
+    x: undefined,
+    y: undefined,
+}
 
 function starGame(){  
 
@@ -14,7 +18,7 @@ function starGame(){
 game.font = elementsSize+'px Verdana';
 game.textAlign = "start";
 
-const map = maps[2];
+const map = maps[0];
 const mapRows = map.trim().split('\n');
 const mapRowCols = mapRows.map(row => row.trim().split(""));
 //console.log(mapRowCols);
@@ -28,13 +32,21 @@ const map = maps[0]
 el match ayuda a buscar string que empiecen por I,X,O,\n y devolverá cada string a partir de ello, además 
 hara un salto al termino de este. y luego se usa el map() que ya conocemos como funciona.
 */
-for (let row = 1; row <= 10; row++) {
-    for (let col = 0; col < 10; col++) {
-        game.fillText(emojis[mapRowCols[row-1][col]],elementsSize*col,elementsSize*row);    
-        
-    }
-}
+mapRowCols.forEach((row, rowIndex) => {
+    row.forEach((col, colIndex)=>{
+        const emoji = emojis[col];
+        const posX =elementsSize*(colIndex);
+        const posY =elementsSize*(rowIndex+1);
+        if(col == 'O'){
+            playerPosition.x = posX;
+            playerPosition.y = posY;
+            console.log({playerPosition});
+        }
+        game.fillText(emoji,posX,posY);
+    })
+});
 
+movePlayer();
 //window.innerHeight
 //window.innerWidth
 
@@ -46,6 +58,10 @@ for (let row = 1; row <= 10; row++) {
     game.fillStyle='purple';
     game.textAlign = 'center';
     game.fillText('platzi',50,50)*/
+}
+
+function movePlayer(){
+    game.fillText(emojis['PLAYER'],playerPosition.x,playerPosition.y); 
 }
 
 function setCanvasSize(){
@@ -77,6 +93,8 @@ btnDown.addEventListener("click", moveDown);
 
     function moveUp() {
     console.log("Me movere hacia arriba");
+    playerPosition.y -= elementsSize;
+    movePlayer();
   }
   
   function moveLeft() {
