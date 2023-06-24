@@ -97,26 +97,43 @@ btnDown.addEventListener("click", moveDown);
 
     function moveUp() {
     console.log("Me movere hacia arriba");
-    playerPosition.y -= elementsSize;
-    starGame();
+    if((playerPosition.y - elementsSize)<elementsSize){
+        console.log("OUT");
+    }else{
+        playerPosition.y -= elementsSize;
+        starGame();
+    }
   }
   
   function moveLeft() {
     console.log("Me movere hacia izq");
-    playerPosition.x -= elementsSize;
-    starGame();
+    if((playerPosition.x - elementsSize)<0){
+        console.log("OUT");
+    }else{
+        playerPosition.x -= elementsSize;
+        starGame();
+    }
+    
   }
   
   function moveRight() {
     console.log("Me movere hacia dere");
-    playerPosition.x += elementsSize;
-    starGame();
+    if(( elementsSize*8-playerPosition.x)<0){
+        console.log("OUT");
+    }else{
+        playerPosition.x += elementsSize;
+        starGame();
+    }
   }
   
   function moveDown() {
     console.log("Me movere hacia aba");
-    playerPosition.y += elementsSize;
-    starGame();
+    if(( elementsSize*9-playerPosition.y)<0){
+        console.log("OUT");
+    }else{
+        playerPosition.y += elementsSize;
+        starGame();
+    }
   }
 
 function moveByKeys(e){
