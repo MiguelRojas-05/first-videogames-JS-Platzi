@@ -32,15 +32,19 @@ const map = maps[0]
 el match ayuda a buscar string que empiecen por I,X,O,\n y devolverá cada string a partir de ello, además 
 hara un salto al termino de este. y luego se usa el map() que ya conocemos como funciona.
 */
+game.clearRect(0,0,canvasSize,canvasSize);
+
 mapRowCols.forEach((row, rowIndex) => {
     row.forEach((col, colIndex)=>{
         const emoji = emojis[col];
         const posX =elementsSize*(colIndex);
         const posY =elementsSize*(rowIndex+1);
         if(col == 'O'){
-            playerPosition.x = posX;
-            playerPosition.y = posY;
-            console.log({playerPosition});
+            if(!playerPosition.x && !playerPosition.y){
+                playerPosition.x = posX;
+                playerPosition.y = posY;
+                console.log({playerPosition});
+            }
         }
         game.fillText(emoji,posX,posY);
     })
@@ -94,19 +98,25 @@ btnDown.addEventListener("click", moveDown);
     function moveUp() {
     console.log("Me movere hacia arriba");
     playerPosition.y -= elementsSize;
-    movePlayer();
+    starGame();
   }
   
   function moveLeft() {
     console.log("Me movere hacia izq");
+    playerPosition.x -= elementsSize;
+    starGame();
   }
   
   function moveRight() {
     console.log("Me movere hacia dere");
+    playerPosition.x += elementsSize;
+    starGame();
   }
   
   function moveDown() {
     console.log("Me movere hacia aba");
+    playerPosition.y += elementsSize;
+    starGame();
   }
 
 function moveByKeys(e){
