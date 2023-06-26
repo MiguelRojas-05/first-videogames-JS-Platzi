@@ -9,8 +9,12 @@ let elementsSize;
 const playerPosition ={
     x: undefined,
     y: undefined,
-}
+};
 
+const giftPosition={
+    x: undefined,
+    y: undefined,
+};
 function starGame(){  
 
 //console.log({canvasSize, elementsSize});
@@ -18,7 +22,7 @@ function starGame(){
 game.font = elementsSize+'px Verdana';
 game.textAlign = "start";
 
-const map = maps[0];
+const map = maps[1];
 const mapRows = map.trim().split('\n');
 const mapRowCols = mapRows.map(row => row.trim().split(""));
 //console.log(mapRowCols);
@@ -45,6 +49,10 @@ mapRowCols.forEach((row, rowIndex) => {
                 playerPosition.y = posY;
                 console.log({playerPosition});
             }
+        }else if(col == 'I'){
+            giftPosition.x = posX;
+            giftPosition.y = posY;
+            console.log({giftPosition});
         }
         game.fillText(emoji,posX,posY);
     })
@@ -65,6 +73,12 @@ movePlayer();
 }
 
 function movePlayer(){
+    const giftColisionX= parseInt(playerPosition.x)  ==   parseInt(giftPosition.x) ;
+    const giftColisionY= parseInt(playerPosition.y) == parseInt(giftPosition.y) ;
+    const giftColision = giftColisionX && giftColisionY;
+    if(giftColision){
+        console.log('Subiste de nivel!');
+    }
     game.fillText(emojis['PLAYER'],playerPosition.x,playerPosition.y); 
 }
 
