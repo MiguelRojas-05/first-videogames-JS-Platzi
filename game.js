@@ -15,6 +15,9 @@ const giftPosition={
     x: undefined,
     y: undefined,
 };
+
+let enemiesPosition = [];
+
 function starGame(){  
 
 //console.log({canvasSize, elementsSize});
@@ -22,7 +25,7 @@ function starGame(){
 game.font = elementsSize+'px Verdana';
 game.textAlign = "start";
 
-const map = maps[1];
+const map = maps[0];
 const mapRows = map.trim().split('\n');
 const mapRowCols = mapRows.map(row => row.trim().split(""));
 //console.log(mapRowCols);
@@ -36,6 +39,8 @@ const map = maps[0]
 el match ayuda a buscar string que empiecen por I,X,O,\n y devolverá cada string a partir de ello, además 
 hara un salto al termino de este. y luego se usa el map() que ya conocemos como funciona.
 */
+enemiesPosition = []
+
 game.clearRect(0,0,canvasSize,canvasSize);
 
 mapRowCols.forEach((row, rowIndex) => {
@@ -53,7 +58,14 @@ mapRowCols.forEach((row, rowIndex) => {
             giftPosition.x = posX;
             giftPosition.y = posY;
             console.log({giftPosition});
+        }else if(col == 'X'){
+            enemiesPosition.push({
+                x: posX,
+                y: posY,
+            })
         }
+
+
         game.fillText(emoji,posX,posY);
     })
 });
@@ -78,6 +90,14 @@ function movePlayer(){
     const giftColision = giftColisionX && giftColisionY;
     if(giftColision){
         console.log('Subiste de nivel!');
+    }
+    const enemyColision = enemiesPosition.find(enemy=>{
+        const enemyColisionEnX = enemy.x.toFixed(2) == playerPosition.x.toFixed(2);
+        const enemyColisionEnY = enemy.y.toFixed(2) == playerPosition.y.toFixed(2);
+        return enemyColisionEnX && enemyColisionEnY;
+    });
+    if(enemyColision){
+        console.log('Chocaste con una bomba gil xD');
     }
     game.fillText(emojis['PLAYER'],playerPosition.x,playerPosition.y); 
 }
