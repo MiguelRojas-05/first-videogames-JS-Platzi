@@ -1,5 +1,6 @@
 const canvas = document.querySelector('#game');
 const game = canvas.getContext('2d');
+const spanLives = document.querySelector('#lives')
 
 window.addEventListener('load',setCanvasSize);
 window.addEventListener('resize',setCanvasSize);
@@ -44,6 +45,8 @@ const map = maps[0]
 el match ayuda a buscar string que empiecen por I,X,O,\n y devolverá cada string a partir de ello, además 
 hara un salto al termino de este. y luego se usa el map() que ya conocemos como funciona.
 */
+showLives();
+
 enemiesPosition = []
 
 game.clearRect(0,0,canvasSize,canvasSize);
@@ -115,6 +118,7 @@ function levelWin(){
 
 function levelFail(){
     lives--;
+    
     if(lives<=0){
         level = 0;
         lives = 3;
@@ -126,6 +130,10 @@ function levelFail(){
 
 function gameWin(){
 console.log('Terminaste el juego');
+}
+
+function showLives(){
+    spanLives.innerHTML = emojis['HEART'].repeat(lives);
 }
 
 function setCanvasSize(){
