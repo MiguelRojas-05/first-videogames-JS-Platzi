@@ -7,6 +7,7 @@ window.addEventListener('resize',setCanvasSize);
 let canvasSize;
 let elementsSize;
 let level = 0;
+let lives = 3;
 
 const playerPosition ={
     x: undefined,
@@ -102,13 +103,24 @@ function movePlayer(){
         return enemyColisionEnX && enemyColisionEnY;
     });
     if(enemyColision){
-        console.log('Chocaste con una bomba gil xD');
+        levelFail();
     }
     game.fillText(emojis['PLAYER'],playerPosition.x,playerPosition.y); 
 }
 
 function levelWin(){
     level++;
+    starGame();
+}
+
+function levelFail(){
+    lives--;
+    if(lives<=0){
+        level = 0;
+        lives = 3;
+    }
+    playerPosition.x = undefined;
+    playerPosition.y = undefined;
     starGame();
 }
 
