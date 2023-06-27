@@ -6,6 +6,8 @@ window.addEventListener('resize',setCanvasSize);
 
 let canvasSize;
 let elementsSize;
+let level = 0;
+
 const playerPosition ={
     x: undefined,
     y: undefined,
@@ -25,7 +27,9 @@ function starGame(){
 game.font = elementsSize+'px Verdana';
 game.textAlign = "start";
 
-const map = maps[0];
+const map = maps[level];
+    
+
 const mapRows = map.trim().split('\n');
 const mapRowCols = mapRows.map(row => row.trim().split(""));
 //console.log(mapRowCols);
@@ -52,12 +56,12 @@ mapRowCols.forEach((row, rowIndex) => {
             if(!playerPosition.x && !playerPosition.y){
                 playerPosition.x = posX;
                 playerPosition.y = posY;
-                console.log({playerPosition});
+                // console.log({playerPosition});
             }
         }else if(col == 'I'){
             giftPosition.x = posX;
             giftPosition.y = posY;
-            console.log({giftPosition});
+            // console.log({giftPosition});
         }else if(col == 'X'){
             enemiesPosition.push({
                 x: posX,
@@ -89,7 +93,8 @@ function movePlayer(){
     const giftColisionY= parseInt(playerPosition.y) == parseInt(giftPosition.y) ;
     const giftColision = giftColisionX && giftColisionY;
     if(giftColision){
-        console.log('Subiste de nivel!');
+        console.log('Se ejecuta siguiente nivel');
+        levelWin();
     }
     const enemyColision = enemiesPosition.find(enemy=>{
         const enemyColisionEnX = enemy.x.toFixed(2) == playerPosition.x.toFixed(2);
@@ -100,6 +105,15 @@ function movePlayer(){
         console.log('Chocaste con una bomba gil xD');
     }
     game.fillText(emojis['PLAYER'],playerPosition.x,playerPosition.y); 
+}
+
+function levelWin(){
+    level++;
+    starGame();
+}
+
+function gameWin(){
+console.log('Terminaste el juego');
 }
 
 function setCanvasSize(){
@@ -141,7 +155,7 @@ btnDown.addEventListener("click", moveDown);
   
   function moveLeft() {
     console.log("Me movere hacia izq");
-    if((playerPosition.x - elementsSize)<0){
+    if((elementsSize*8-playerPosition.x)<0){
         console.log("OUT");
     }else{
         playerPosition.x -= elementsSize;
