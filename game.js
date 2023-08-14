@@ -108,7 +108,7 @@ function movePlayer(){
     if(enemyColision){
         levelFail();
     }
-    game.fillText(emojis['PLAYER'],playerPosition.x,playerPosition.y); 
+    game.fillText(emojis['PLAYER'],playerPosition.x ,playerPosition.y); 
 }
 
 function levelWin(){
@@ -139,14 +139,14 @@ function showLives(){
 function setCanvasSize(){
     
     if(window.innerHeight>window.innerWidth){
-        canvasSize = window.innerWidth * 0.8;
+        canvasSize = parseInt(window.innerWidth * 0.8);
     }else{
-        canvasSize = window.innerHeight * 0.8;
+        canvasSize = parseInt(window.innerHeight * 0.8);
     }
     canvas.setAttribute('width',canvasSize);
     canvas.setAttribute('height',canvasSize);
 
-    elementsSize =  (canvasSize/10)-1;
+    elementsSize =  (canvasSize/10)-2;
 
     playerPosition.x = undefined;
     playerPosition.y = undefined;
@@ -167,7 +167,7 @@ btnDown.addEventListener("click", moveDown);
 
     function moveUp() {
     console.log("Me movere hacia arriba");
-    if((playerPosition.y - elementsSize)<elementsSize){
+    if((playerPosition.y - elementsSize)+1<elementsSize){
         console.log("OUT");
     }else{
         playerPosition.y -= elementsSize;
@@ -177,7 +177,7 @@ btnDown.addEventListener("click", moveDown);
   
   function moveLeft() {
     console.log("Me movere hacia izq");
-    if((playerPosition.x - elementsSize)<0){
+    if((playerPosition.x - elementsSize)+1<0){
         console.log("OUT");
     }else{
         playerPosition.x -= elementsSize;
