@@ -1,6 +1,16 @@
 const canvas = document.querySelector('#game');
 const game = canvas.getContext('2d');
-const spanLives = document.querySelector('#lives')
+const spanLives = document.querySelector('#lives');
+const spanTime = document.querySelector('#time');
+const buttonEmpezar = document.querySelector('.botonEmpezar');
+const presentacion = document.querySelector('.presentacion');
+
+buttonEmpezar.addEventListener('click',()=>{
+    presentacion.classList.add('despejar');
+    timeStart = Date.now();
+    timeInterval = setInterval(showTime,100);
+    starGame();
+})
 
 window.addEventListener('load',setCanvasSize);
 window.addEventListener('resize',setCanvasSize);
@@ -9,6 +19,10 @@ let canvasSize;
 let elementsSize;
 let level = 0;
 let lives = 3;
+
+let timeInterval;
+let timePlayer;
+let timeStart;
 
 const playerPosition ={
     x: undefined,
@@ -30,7 +44,7 @@ game.font = elementsSize+'px Verdana';
 game.textAlign = "start";
 
 const map = maps[level];
-    
+   
 
 const mapRows = map.trim().split('\n');
 const mapRowCols = mapRows.map(row => row.trim().split(""));
@@ -92,6 +106,8 @@ movePlayer();
     game.fillText('platzi',50,50)*/
 }
 
+
+
 function movePlayer(){
     const giftColisionX= parseInt(playerPosition.x)  ==   parseInt(giftPosition.x) ;
     const giftColisionY= parseInt(playerPosition.y) == parseInt(giftPosition.y) ;
@@ -122,6 +138,7 @@ function levelFail(){
     if(lives<=0){
         level = 0;
         lives = 3;
+        window.location.reload();
     }
     playerPosition.x = undefined;
     playerPosition.y = undefined;
@@ -129,11 +146,14 @@ function levelFail(){
 }
 
 function gameWin(){
-console.log('Terminaste el juego');
+    clearInterval(timeInterval);
 }
 
 function showLives(){
     spanLives.innerHTML = emojis['HEART'].repeat(lives);
+}
+function showTime(){
+    spanTime.innerHTML = Date.now()-timeStart;
 }
 
 function setCanvasSize(){
