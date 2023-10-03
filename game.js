@@ -2,14 +2,24 @@ const canvas = document.querySelector('#game');
 const game = canvas.getContext('2d');
 const spanLives = document.querySelector('#lives');
 const spanTime = document.querySelector('#time');
+const spanRecord = document.querySelector('#record');
+const result = document.querySelector('#result');
 const buttonEmpezar = document.querySelector('.botonEmpezar');
 const presentacion = document.querySelector('.presentacion');
+const reiniciar = document.querySelector('.REINICIAR');
+const btnReiniciar = document.querySelector('#btn__reiniciar');
+
+btnReiniciar.addEventListener('click', ()=>{
+    presentacion.classList.add('despejar')
+    window.location.reload();
+})
 
 buttonEmpezar.addEventListener('click',()=>{
     presentacion.classList.add('despejar');
     timeStart = Date.now();
     timeInterval = setInterval(showTime,100);
     starGame();
+    showRecord();
 })
 
 window.addEventListener('load',setCanvasSize);
@@ -128,8 +138,13 @@ function movePlayer(){
 }
 
 function levelWin(){
-    level++;
-    starGame();
+    if(level>=2){
+        gameWin();
+    }else{
+        level++;
+        starGame();
+    }
+    
 }
 
 function levelFail(){
@@ -147,6 +162,23 @@ function levelFail(){
 
 function gameWin(){
     clearInterval(timeInterval);
+
+    const playerTime = Date.now()-timeStart;
+    const recordTime = localStorage.getItem('record_time');
+    reiniciar.classList.remove('despejar');
+
+    if(recordTime){
+        
+        if(recordTime>=playerTime){
+            localStorage.setItem('record_time',playerTime);
+            result.innerHTML = "Felicidades, superaste el record anterior";
+        }else{
+            result.innerHTML = "Lo siento no superaste el record anterior";
+        }
+    }else{
+        localStorage.setItem('record_time', playerTime);
+    }
+    console.log({recordTime,playerTime});
 }
 
 function showLives(){
@@ -155,7 +187,9 @@ function showLives(){
 function showTime(){
     spanTime.innerHTML = Date.now()-timeStart;
 }
-
+function showRecord(){
+    spanRecord.innerHTML = localStorage.getItem('record_time');
+}
 function setCanvasSize(){
     
     if(window.innerHeight>window.innerWidth){

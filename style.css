@@ -1,5 +1,5 @@
 body {
-    background-color: indigo;
+    background-color: #9e5603;
     color: #fff;  
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     margin: 0;
@@ -28,11 +28,13 @@ body {
   .messages {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 auto;
+    margin: auto;
+    margin-bottom: 10px;
     width: 80%;
     max-width: 460px;
-    padding-top: 30px;
+    padding-top: 20px;
     padding-bottom: 20px;
+    height: 60px;
    
   }
   
@@ -63,10 +65,30 @@ body {
     font-size: 30px;
     cursor: pointer;
   }
+.REINICIAR{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+#btn__reiniciar{
+  margin: auto;
+  width: 30%;
+  height: 80px;
+  border-radius: 20px;
+  border: none;
+  font-size: 30px;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #fff;
+  background-color: #ff0000;
+  cursor: pointer;
+}
 
 .despejar{
   display: none;
 }
+
+
 
   @media (max-width: 440px) {
     .btns button {
